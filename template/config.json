@@ -1,0 +1,63 @@
+{
+  "project": "프로젝트 이름",
+  "language": "ko",
+
+  "spec": {
+    "files": ["spec/요구사항 명세서.xlsx"],
+    "canonical": "정본 위치 설명 (예: 구글 시트 URL — 여기서 내려받은 xlsx 가 spec/ 에 있다)",
+    "allSheets": true
+  },
+
+  "baseline": {
+    "source": "명세서 안 테이블 목록 시트 이름 (예: 데이터모델). 없으면 null",
+    "note": "null 이면 S2 가 만든 엔티티 목록을 부장이 승인(DEC)한 것이 기준선이 된다"
+  },
+
+  "existingSchema": {
+    "mode": "extend",
+    "repo": "/absolute/path/to/repo",
+    "ref": "origin/dev",
+    "path": "packages/db/prisma/schema.prisma",
+    "fetch": true
+  },
+
+  "db": {
+    "preset": "prisma-mysql",
+    "schemaFile": "S3-schema/merged.prisma",
+    "newOnlyFile": "S3-schema/new.prisma",
+    "validate": "/absolute/path/to/repo/node_modules/.bin/prisma validate --schema {schema}",
+    "fullSql": "/absolute/path/to/repo/node_modules/.bin/prisma migrate diff --from-empty --to-schema-datamodel {schema} --script",
+    "deltaSql": "/absolute/path/to/repo/node_modules/.bin/prisma migrate diff --from-schema-datamodel {existing} --to-schema-datamodel {schema} --script",
+    "docker": { "image": "mysql:8.0", "port": 3399, "env": { "MYSQL_ROOT_PASSWORD": "test", "MYSQL_DATABASE": "verify" } },
+    "dummyEnv": { "DATABASE_URL": "mysql://root:test@127.0.0.1:3399/verify" },
+    "conventionsFrom": "existing"
+  },
+
+  "ownership": {
+    "me": "내 이름 (담당 구분이 없으면 null)",
+    "members": ["팀원1", "팀원2"],
+    "rowColumn": "담당",
+    "tableOwnerSource": "테이블별 담당이 적힌 시트 (예: 데이터모델). 없으면 null",
+    "rule": "데이터 쓰기 주체 기준 (명세서에 소유권 원칙이 있으면 그 문구)"
+  },
+
+  "screenPlan": "none",
+
+  "outOfScope": ["앱 코드", "API", "공유 DB 에 마이그레이션 적용", "데이터 이관 스크립트"],
+
+  "readOnly": {
+    "priorWork": null,
+    "priorWorkNote": "이전 시도 폴더 경로. 설계 단계에서는 열람 금지, S8 감사만 참고"
+  },
+
+  "engines": { "default": "claude" },
+  "engineArgs": {
+    "claude": ["--permission-mode", "bypassPermissions"],
+    "codex": ["--dangerously-bypass-approvals-and-sandbox"]
+  },
+  "timeoutMinutes": 60,
+
+  "limits": { "maxPair": 3, "maxTotal": 10 },
+
+  "git": { "commit": true, "trailer": "" }
+}
