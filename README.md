@@ -3,6 +3,8 @@
 > 명세서는 있는데 화면 기획은 아직 없다. 그래도 DB 스키마는 먼저 잡아야 한다.
 > 이 스킬은 그 상황을 위한 **"부장 + 직원" 멀티에이전트 조직**이다.
 
+<img width="1122" height="1402" alt="Image" src="https://github.com/user-attachments/assets/d5450b64-851b-4298-9aa9-deb6f9f4bd94" />
+
 - Claude Code 와 Codex 에서 모두 쓴다. 단계마다 엔진을 섞을 수도 있다.
 - 결과물:
   - 전체 관계도 문서
